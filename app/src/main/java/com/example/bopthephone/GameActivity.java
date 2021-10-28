@@ -16,6 +16,8 @@ import java.util.Spliterator;
 
 public class GameActivity extends AppCompatActivity {
 
+    //Dies ist meine Branch, es gibt viele wie sie, aber diese ist meine
+
     SensorManager sensorManager;
     Sensor gyroSensor;
     Sensor accelSensor;
