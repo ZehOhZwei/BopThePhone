@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="324dp"
         android:text="Play"
-        android:onClick="openView"
+        android:onClick="showPlayView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -28,7 +28,7 @@
         android:layout_marginBottom="16dp"
         android:background="#009688"
         android:text="Scoreboard"
-        android:onClick="openView"
+        android:onClick="showScoreboardView"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -40,8 +40,8 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:background="#009688"
-        android:text="Einstellungen"
-        android:onClick="openView"
+        android:text="Settings"
+        android:onClick="showSettingsView"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 </android.support.constraint.ConstraintLayout>
