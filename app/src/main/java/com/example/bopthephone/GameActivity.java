@@ -21,6 +21,7 @@ public class GameActivity extends AppCompatActivity {
     SensorManager sensorManager;
     Sensor gyroSensor;
     Sensor accelSensor;
+    float threshold = 2f;
 
     TextView text;
 
@@ -76,7 +77,9 @@ public class GameActivity extends AppCompatActivity {
         }
 
         public void onSensorChanged(SensorEvent event) {
-            text.setText("GyroSuccess");
+            if(event.values[1] >= threshold){
+                text.setText("GyroSuccess");
+            }
         }
     };
 
@@ -87,7 +90,10 @@ public class GameActivity extends AppCompatActivity {
 
         @Override
         public void onSensorChanged(SensorEvent event) {
-            text.setText("AccelSuccess");
+            if((event.values[1] - 9.81f) >= threshold){
+                text.setText("AccelSuccess");
+            }
+
         }
 
     };
