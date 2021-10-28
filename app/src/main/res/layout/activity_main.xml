@@ -7,28 +7,17 @@
     tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/singleplayer"
+        android:id="@+id/play"
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="324dp"
-        android:text="Einzelspiel"
+        android:text="Play"
+        android:onClick="openView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/multiplayer"
-        style="@style/Widget.AppCompat.Button.Borderless"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Mehrspieler"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/singleplayer" />
 
     <Button
         android:id="@+id/scoreboard"
@@ -39,6 +28,7 @@
         android:layout_marginBottom="16dp"
         android:background="#009688"
         android:text="Scoreboard"
+        android:onClick="openView"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -51,6 +41,7 @@
         android:layout_marginBottom="16dp"
         android:background="#009688"
         android:text="Einstellungen"
+        android:onClick="openView"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 </android.support.constraint.ConstraintLayout>
