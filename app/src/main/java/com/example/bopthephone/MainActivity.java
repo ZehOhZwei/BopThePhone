@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.ImageButton;
 
 public class MainActivity extends AppCompatActivity
 {
@@ -15,21 +14,13 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Intent toGameActivity = new Intent(MainActivity.this , GameActivity.class);
-        ImageButton startGameButton = findViewById(R.id.play);
 
-        startGameButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                MainActivity.this.startActivity(toGameActivity);
-            }
-        });
     }
 
-    public void playClick(View view)
+    public void gameClick(View view)
     {
-        Intent showPlayView = new Intent(MainActivity.this , GameActivity.class);
-        startActivity(showPlayView);
+        Intent showGameView = new Intent(MainActivity.this , GameActivity.class);
+        startActivity(showGameView);
     }
 
     public void scoreboardClick(View view)

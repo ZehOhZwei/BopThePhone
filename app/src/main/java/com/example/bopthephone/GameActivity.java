@@ -26,12 +26,16 @@ public class GameActivity extends AppCompatActivity {
     Random random = new Random();
 
     TextView text;
+    Button startGameButton;
+    Button tapItButton;
+    Button twistItButton;
+    Button pullItButton;
 
     String TAP = "Tap it!";
     String TWIST = "Twist it!";
     String PULL = "Pull it!";
 
-    long countdown = 3000;
+    int countdown = 3000;
     boolean cont = false;
     boolean gameOver = false;
     int score = 0;
@@ -49,38 +53,11 @@ public class GameActivity extends AppCompatActivity {
 
         text = findViewById(R.id.gameText);
         text.setText(TAP);
+        startGameButton = findViewById(R.id.StartGameButton);
+        tapItButton = findViewById(R.id.TapItButton);
+        twistItButton = findViewById(R.id.TwistItButton);
+        pullItButton = findViewById(R.id.PullItButton);
 
-        Button tapButton = findViewById(R.id.tapButton);
-
-        tapButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(text.toString() == TAP){
-                    cont = true;
-                }
-            }
-        });
-
-        CountDownTimer countDownTimer = new CountDownTimer(countdown, 250) {
-            @Override
-            public void onTick(long l) {
-                if(cont) {
-                    cont = false;
-                    score++;
-                    text.setText(chooseNextTask(random.nextInt(3)) + "" + score);
-                    //countDownTimer.start();
-                    cancel();
-                }
-
-                text.setText(i);
-                i++;
-            }
-
-            @Override
-            public void onFinish() {
-
-            }
-        };
     }
 
 
@@ -96,6 +73,46 @@ public class GameActivity extends AppCompatActivity {
         super.onStop();
         sensorManager.unregisterListener(gyroListener);
         sensorManager.unregisterListener(accelListener);
+    }
+
+    public void startGameClick(View view){
+        startGameButton.setVisibility(View.INVISIBLE);
+        tapItButton.setVisibility(View.VISIBLE);
+        twistItButton.setVisibility(View.VISIBLE);
+        pullItButton.setVisibility(View.VISIBLE);
+
+        CountDownTimer countDownTimer = new CountDownTimer(countdown, 250) {
+            @Override
+            public void onTick(long l) {
+                if(cont) {
+                    cont = false;
+                    score++;
+                    text.setText(chooseNextTask(random.nextInt(3)));
+                    //countDownTimer.start();
+                    cancel();
+                }
+
+                text.setText(i + "");
+                i++;
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        }.start();
+    }
+
+    public void tapItClick(View view){
+
+    }
+
+    public void twistItClick(View view){
+
+    }
+
+    public void pullItClick(View view){
+
     }
 
     public SensorEventListener gyroListener = new SensorEventListener() {
