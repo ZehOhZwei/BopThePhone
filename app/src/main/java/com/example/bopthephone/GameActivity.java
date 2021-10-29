@@ -132,4 +132,25 @@ public class GameActivity extends AppCompatActivity {
         }
         return TAP;
     }
+
+    public SensorEventListener gyroListener = new SensorEventListener() {
+        public void onAccuracyChanged(Sensor sensor, int acc) {
+        }
+
+        public void onSensorChanged(SensorEvent event) {
+            text.setText("GyroSuccess");
+        }
+    };
+
+    public SensorEventListener accelListener = new SensorEventListener() {
+        @Override
+        public void onAccuracyChanged(Sensor sensor, int acc) {
+        }
+
+        @Override
+        public void onSensorChanged(SensorEvent event) {
+            text.setText("AccelSuccess");
+        }
+
+    };
 }
