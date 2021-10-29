@@ -14,9 +14,8 @@ import android.widget.TextView;
 
 import java.util.Random;
 
-public class GameActivity extends AppCompatActivity {
-
-    //Dies ist meine Branch, es gibt viele wie sie, aber diese ist meine
+public class GameActivity extends AppCompatActivity
+{
 
     SensorManager sensorManager;
     Sensor gyroSensor;
@@ -132,25 +131,4 @@ public class GameActivity extends AppCompatActivity {
         }
         return TAP;
     }
-
-    public SensorEventListener gyroListener = new SensorEventListener() {
-        public void onAccuracyChanged(Sensor sensor, int acc) {
-        }
-
-        public void onSensorChanged(SensorEvent event) {
-            text.setText("GyroSuccess");
-        }
-    };
-
-    public SensorEventListener accelListener = new SensorEventListener() {
-        @Override
-        public void onAccuracyChanged(Sensor sensor, int acc) {
-        }
-
-        @Override
-        public void onSensorChanged(SensorEvent event) {
-            text.setText("AccelSuccess");
-        }
-
-    };
 }
