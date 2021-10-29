@@ -1,6 +1,7 @@
 package com.example.bopthephone;
 
 import android.annotation.SuppressLint;
+import android.os.CountDownTimer;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Build;
@@ -9,6 +10,7 @@ import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowInsets;
+import android.widget.TextView;
 
 import com.example.bopthephone.databinding.ActivityPlayBinding;
 
@@ -123,7 +125,7 @@ public class PlayActivity extends AppCompatActivity {
         // Upon interacting with UI controls, delay any scheduled hide()
         // operations to prevent the jarring behavior of controls going away
         // while interacting with the UI.
-        binding.dummyButton.setOnTouchListener(mDelayHideTouchListener);
+        binding.go.setOnTouchListener(mDelayHideTouchListener);
     }
 
     @Override
@@ -181,5 +183,21 @@ public class PlayActivity extends AppCompatActivity {
     private void delayedHide(int delayMillis) {
         mHideHandler.removeCallbacks(mHideRunnable);
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
+    }
+
+    public void startCountdown(View view)
+    {
+        CountDownTimer countDownTimer = new CountDownTimer(30000, 1000)
+        {
+            @Override
+            public void onTick(long l) {
+
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        }.start();
     }
 }
