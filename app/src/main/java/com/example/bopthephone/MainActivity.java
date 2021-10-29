@@ -6,10 +6,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity
+{
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -23,5 +25,26 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-    //Test
+
+    public void playClick(View view)
+    {
+        Intent showPlayView = new Intent(MainActivity.this , GameActivity.class);
+        startActivity(showPlayView);
+    }
+
+    public void scoreboardClick(View view)
+    {
+        Intent showScoreboardView = new Intent(MainActivity.this , ScoreboardActivity.class);
+        startActivity(showScoreboardView);
+    }
+
+    public void settingsClick(View view)
+    {
+        Intent showSettingsView = new Intent(MainActivity.this , SettingsActivity.class);
+        startActivity(showSettingsView);
+    }
 }
+
+
+
+
