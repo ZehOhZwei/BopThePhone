@@ -16,16 +16,6 @@ public class MainActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        Intent toGameActivity = new Intent(MainActivity.this , GameActivity.class);
-        ImageButton startGameButton = findViewById(R.id.play);
-
-        startGameButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                MainActivity.this.startActivity(toGameActivity);
-            }
-        });
     }
 
     public void playClick(View view)
