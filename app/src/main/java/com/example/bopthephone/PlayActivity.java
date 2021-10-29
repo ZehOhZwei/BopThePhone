@@ -187,16 +187,17 @@ public class PlayActivity extends AppCompatActivity {
 
     public void startCountdown(View view)
     {
-        CountDownTimer countDownTimer = new CountDownTimer(30000, 1000)
+        TextView cdTimer = findViewById(R.id.countdownText);
+        CountDownTimer countDownTimer = new CountDownTimer(3000, 1000)
         {
             @Override
             public void onTick(long l) {
-
+                cdTimer.setText("seconds remaining: " + l/1000);
             }
 
             @Override
             public void onFinish() {
-
+                cdTimer.setText("Lets Play!");
             }
         }.start();
     }
