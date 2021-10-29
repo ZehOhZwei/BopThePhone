@@ -185,7 +185,7 @@ public class PlayActivity extends AppCompatActivity {
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
     }
 
-    public void startCountdown(View view)
+    public void goClick(View view)
     {
         TextView cdTimer = findViewById(R.id.countdownText);
         CountDownTimer countDownTimer = new CountDownTimer(3000, 1000)

@@ -17,19 +17,19 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
     }
 
-    public void showPlayView(View view)
+    public void playClick(View view)
     {
         Intent showPlayView = new Intent(MainActivity.this , PlayActivity.class);
         startActivity(showPlayView);
     }
 
-    public void showScoreboardView(View view)
+    public void scoreboardClick(View view)
     {
         Intent showScoreboardView = new Intent(MainActivity.this , ScoreboardActivity.class);
         startActivity(showScoreboardView);
     }
 
-    public void showSettingsView(View view)
+    public void settingsClick(View view)
     {
         Intent showSettingsView = new Intent(MainActivity.this , SettingsActivity.class);
         startActivity(showSettingsView);
