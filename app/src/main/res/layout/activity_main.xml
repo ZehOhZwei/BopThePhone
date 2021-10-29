@@ -6,18 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <Button
+
+    <ImageButton
         android:id="@+id/play"
-        style="@style/Widget.AppCompat.Button.Borderless"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="324dp"
-        android:text="Play"
-        android:onClick="openView"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:background="@drawable/gamebutton"
+        android:onClick="playClick"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.482"
+        app:srcCompat="@drawable/ic_baseline_play_circle_outline_80" />
 
     <Button
         android:id="@+id/scoreboard"
@@ -28,7 +29,7 @@
         android:layout_marginBottom="16dp"
         android:background="#009688"
         android:text="Scoreboard"
-        android:onClick="openView"
+        android:onClick="scoreboardClick"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -40,8 +41,8 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:background="#009688"
-        android:text="Einstellungen"
-        android:onClick="openView"
+        android:text="Settings"
+        android:onClick="settingsClick"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 </android.support.constraint.ConstraintLayout>
