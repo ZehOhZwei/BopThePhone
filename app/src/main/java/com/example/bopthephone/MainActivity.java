@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity
 
     public void playClick(View view)
     {
-        Intent showPlayView = new Intent(MainActivity.this , PlayActivity.class);
+        Intent showPlayView = new Intent(MainActivity.this , GameActivity.class);
         startActivity(showPlayView);
     }
 
