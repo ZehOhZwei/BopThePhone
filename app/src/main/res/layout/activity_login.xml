@@ -43,7 +43,7 @@
         android:id="@+id/buttonlogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="login"
+        android:text="Existing User? Go to sign in page"
         android:layout_marginTop="50dp"
         android:layout_below="@id/buttonsignup"/>
 

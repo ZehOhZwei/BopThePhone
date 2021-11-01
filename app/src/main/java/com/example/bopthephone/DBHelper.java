@@ -1,0 +1,51 @@
+package com.example.bopthephone;
+
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+import android.support.annotation.Nullable;
+
+public class DBHelper extends SQLiteOpenHelper {
+
+    public static final String DBNAME = "Login.db";
+
+    public DBHelper(Context context) {
+        super(context, "Login.db", null, 1);
+    }
+
+    @Override
+    public void onCreate(SQLiteDatabase myDB) {
+
+        // Creates Table with two columns (Username & Password)
+        myDB.execSQL("create table users(username TEXT primary key, password TEXT  )");
+    }
+
+    @Override
+    public void onUpgrade(SQLiteDatabase myDB, int i, int i1) {
+        myDB.execSQL("drop Table if exists users");
+    }
+
+    public Boolean insertData(String username, String password) {
+        SQLiteDatabase myDB = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("username", username);
+        contentValues.put("password", password);
+        long result = myDB.insert("username",null, contentValues);
+
+        if (result == -1)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+
+    }
+
+    public Boolean checkUsername(String username)
+    {
+        return false;
+    }
+}
