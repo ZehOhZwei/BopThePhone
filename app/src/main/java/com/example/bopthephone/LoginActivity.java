@@ -8,30 +8,20 @@ import android.widget.EditText;
 
 public class LoginActivity extends AppCompatActivity {
 
-    EditText username, password, repassword;
-    Button signup, signin;
-
+    EditText username, password;
+    Button buttonlogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        username = (EditText) findViewById(R.id.username);
-        password = (EditText) findViewById(R.id.password);
-        repassword = (EditText) findViewById(R.id.repassword);
+        username = (EditText) findViewById(R.id.usernameLogin);
+        password = (EditText) findViewById(R.id.passwordLogin);
 
-        signup = (Button) findViewById(R.id.buttonsignup);
-        signin = (Button) findViewById(R.id.buttonlogin);
+        buttonlogin = (Button) findViewById(R.id.buttonloginLOGIN);
 
-        signup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-
-        signin.setOnClickListener(new View.OnClickListener() {
+        buttonlogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
