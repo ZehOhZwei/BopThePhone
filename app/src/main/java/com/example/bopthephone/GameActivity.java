@@ -41,7 +41,7 @@ public class GameActivity extends AppCompatActivity {
     boolean cont = false;
     boolean gameOver = false;
     int score = 0;
-    int i = 3000;
+    int i = 10000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +86,7 @@ public class GameActivity extends AppCompatActivity {
         twistItButton.setVisibility(View.VISIBLE);
         pullItButton.setVisibility(View.VISIBLE);
 
-        gameRound(3000);
+        gameRound(10000);
     }
 
     public void gameRound(int countdown){
@@ -140,7 +140,9 @@ public class GameActivity extends AppCompatActivity {
 
         public void onSensorChanged(SensorEvent event) {
             if(event.values[1] >= threshold){
-                ;
+                if(currentTask == TWIST){
+                    cont = true;
+                }
             }
         }
     };
@@ -153,7 +155,9 @@ public class GameActivity extends AppCompatActivity {
         @Override
         public void onSensorChanged(SensorEvent event) {
             if((event.values[1] - 9.81f) >= threshold){
-
+                if(currentTask == PULL){
+                    cont = true;
+                }
             }
         }
     };
