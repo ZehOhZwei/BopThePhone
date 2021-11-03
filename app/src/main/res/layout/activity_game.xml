@@ -6,20 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".GameActivity">
 
-    <TextView
-        android:id="@+id/TaskText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:drawableTint="@color/black"
-        android:text="Task"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-
-        app:layout_constraintVertical_bias="0.278" />
-
     <Button
         android:id="@+id/StartGameButton"
         android:layout_width="wrap_content"
@@ -31,6 +17,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
     <Button
         android:id="@+id/TwistItButton"
         android:layout_width="wrap_content"
@@ -40,9 +27,10 @@
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TaskText" />
-
+        app:layout_constraintTop_toBottomOf="@+id/TaskText"
+        app:layout_constraintVertical_bias="0.616" />
 
     <Button
         android:id="@+id/PullItButton"
@@ -71,12 +59,39 @@
         app:layout_constraintVertical_bias="0.68" />
 
     <TextView
+        android:id="@+id/TaskText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableTint="@color/black"
+        android:text="Task"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+
+        app:layout_constraintVertical_bias="0.134" />
+
+    <TextView
         android:id="@+id/ScoreText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Score"
-        app:layout_constraintBottom_toTopOf="@+id/StartGameButton"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TaskText"
+        app:layout_constraintVertical_bias="0.075" />
+
+    <TextView
+        android:id="@+id/CountdownText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Countdown"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TaskText" />
+        app:layout_constraintTop_toBottomOf="@+id/ScoreText"
+        app:layout_constraintVertical_bias="0.089" />
 </android.support.constraint.ConstraintLayout>

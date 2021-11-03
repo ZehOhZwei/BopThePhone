@@ -27,6 +27,7 @@ public class GameActivity extends AppCompatActivity {
 
     TextView taskText;
     TextView scoreText;
+    TextView countdownText;
     Button startGameButton;
     Button tapItButton;
     Button twistItButton;
@@ -40,8 +41,7 @@ public class GameActivity extends AppCompatActivity {
     boolean cont = false;
     boolean gameOver = false;
     int score = 0;
-
-    int i = 0;
+    int i = 3000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +54,10 @@ public class GameActivity extends AppCompatActivity {
 
         taskText = findViewById(R.id.TaskText);
         scoreText = findViewById(R.id.ScoreText);
+        countdownText = findViewById(R.id.CountdownText);
         currentTask = TAP;
         scoreText.setText(score + "");
+        countdownText.setText(i + "");
         startGameButton = findViewById(R.id.StartGameButton);
         tapItButton = findViewById(R.id.TapItButton);
         twistItButton = findViewById(R.id.TwistItButton);
@@ -88,16 +90,20 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void gameRound(int countdown){
-        CountDownTimer countDownTimer = new CountDownTimer(countdown, 250) {
+        CountDownTimer countDownTimer = new CountDownTimer(countdown, 10) {
             @Override
             public void onTick(long l) {
+                i = i-10;
                 taskText.setText(currentTask);
                 scoreText.setText(score + "");
+                countdownText.setText(i + "");
                 if(cont) {
                     cont = false;
                     score++;
                     currentTask = chooseNextTask(random.nextInt(3));
-                    gameRound(countdown - (countdown/50));
+                    i = countdown - (countdown/100);
+                    gameRound(countdown - (countdown/100));
+                    cancel();
                 }
             }
 
