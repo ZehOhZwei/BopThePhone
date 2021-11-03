@@ -25,17 +25,18 @@ public class GameActivity extends AppCompatActivity {
 
     Random random = new Random();
 
-    TextView text;
+    TextView taskText;
+    TextView scoreText;
     Button startGameButton;
     Button tapItButton;
     Button twistItButton;
     Button pullItButton;
 
-    String TAP = "Tap it!";
-    String TWIST = "Twist it!";
-    String PULL = "Pull it!";
+    final String TAP = "Tap it!";
+    final String TWIST = "Twist it!";
+    final String PULL = "Pull it!";
 
-    int countdown = 3000;
+    String currentTask;
     boolean cont = false;
     boolean gameOver = false;
     int score = 0;
@@ -51,8 +52,10 @@ public class GameActivity extends AppCompatActivity {
         gyroSensor = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
         accelSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
-        text = findViewById(R.id.gameText);
-        text.setText(TAP);
+        taskText = findViewById(R.id.TaskText);
+        scoreText = findViewById(R.id.ScoreText);
+        currentTask = TAP;
+        scoreText.setText(score + "");
         startGameButton = findViewById(R.id.StartGameButton);
         tapItButton = findViewById(R.id.TapItButton);
         twistItButton = findViewById(R.id.TwistItButton);
@@ -81,38 +84,48 @@ public class GameActivity extends AppCompatActivity {
         twistItButton.setVisibility(View.VISIBLE);
         pullItButton.setVisibility(View.VISIBLE);
 
+        gameRound(3000);
+    }
+
+    public void gameRound(int countdown){
         CountDownTimer countDownTimer = new CountDownTimer(countdown, 250) {
             @Override
             public void onTick(long l) {
+                taskText.setText(currentTask);
+                scoreText.setText(score + "");
                 if(cont) {
                     cont = false;
                     score++;
-                    text.setText(chooseNextTask(random.nextInt(3)));
-                    //countDownTimer.start();
-                    cancel();
+                    currentTask = chooseNextTask(random.nextInt(3));
+                    gameRound(countdown - (countdown/50));
                 }
-
-                text.setText(i + "");
-                i++;
             }
 
             @Override
             public void onFinish() {
-
+                taskText.setText("Game Over!");
             }
         }.start();
     }
 
     public void tapItClick(View view){
-
+        if(currentTask == TAP){
+            cont = true;
+        }
     }
 
     public void twistItClick(View view){
 
+        if(currentTask == TWIST){
+            cont = true;
+        }
     }
 
     public void pullItClick(View view){
 
+        if(currentTask == PULL){
+            cont = true;
+        }
     }
 
     public SensorEventListener gyroListener = new SensorEventListener() {

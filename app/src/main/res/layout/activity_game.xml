@@ -7,24 +7,25 @@
     tools:context=".GameActivity">
 
     <TextView
-        android:id="@+id/gameText"
+        android:id="@+id/TaskText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:drawableTint="@color/black"
-        android:text="TextView"
+        android:text="Task"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
 
-        app:layout_constraintVertical_bias="0.318" />
+        app:layout_constraintVertical_bias="0.278" />
+
     <Button
         android:id="@+id/StartGameButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Start Game"
         android:onClick="startGameClick"
+        android:text="Start Game"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -40,7 +41,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/gameText" />
+        app:layout_constraintTop_toBottomOf="@+id/TaskText" />
 
 
     <Button
@@ -68,4 +69,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.68" />
+
+    <TextView
+        android:id="@+id/ScoreText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Score"
+        app:layout_constraintBottom_toTopOf="@+id/StartGameButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TaskText" />
 </android.support.constraint.ConstraintLayout>
