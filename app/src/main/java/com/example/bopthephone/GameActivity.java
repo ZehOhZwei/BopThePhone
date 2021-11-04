@@ -10,6 +10,7 @@ import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.Random;
@@ -27,11 +28,11 @@ public class GameActivity extends AppCompatActivity {
 
     TextView taskText;
     TextView scoreText;
-    TextView countdownText;
     Button startGameButton;
     Button tapItButton;
     Button twistItButton;
     Button pullItButton;
+    ProgressBar countDownBar;
 
     final String TAP = "Tap it!";
     final String TWIST = "Twist it!";
@@ -56,15 +57,13 @@ public class GameActivity extends AppCompatActivity {
 
         taskText = findViewById(R.id.TaskText);
         scoreText = findViewById(R.id.ScoreText);
-        countdownText = findViewById(R.id.CountdownText);
         currentTask = TAP;
         scoreText.setText(score + "");
-        countdownText.setText(i + "");
-        i = cd;
         startGameButton = findViewById(R.id.StartGameButton);
         tapItButton = findViewById(R.id.TapItButton);
         twistItButton = findViewById(R.id.TwistItButton);
         pullItButton = findViewById(R.id.PullItButton);
+        countDownBar = findViewById(R.id.CountDownBar);
 
     }
 
@@ -88,8 +87,9 @@ public class GameActivity extends AppCompatActivity {
        tapItButton.setVisibility(View.VISIBLE);
        twistItButton.setVisibility(View.VISIBLE);
        pullItButton.setVisibility(View.VISIBLE);
-
-        gameRound(cd);
+       i = cd;
+       score = 0;
+       gameRound(cd);
     }
 
     public void gameRound(int countdown){
@@ -99,12 +99,13 @@ public class GameActivity extends AppCompatActivity {
                 i = i - interval;
                 taskText.setText(currentTask);
                 scoreText.setText(score + "");
-                countdownText.setText(i + "");
+                countDownBar.setProgress(i);
                 if(cont) {
                     cont = false;
                     score++;
                     currentTask = chooseNextTask(random.nextInt(3));
                     i = countdown - (countdown/100);
+                    countDownBar.setMax(i);
                     gameRound(countdown - (countdown/100));
                     cancel();
                 }
@@ -117,7 +118,6 @@ public class GameActivity extends AppCompatActivity {
                 tapItButton.setVisibility(View.INVISIBLE);
                 twistItButton.setVisibility(View.INVISIBLE);
                 pullItButton.setVisibility(View.INVISIBLE);
-                i = cd;
                 startGameButton.setText("Play Again?");
             }
         }.start();

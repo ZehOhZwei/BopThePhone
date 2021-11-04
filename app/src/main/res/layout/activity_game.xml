@@ -84,15 +84,17 @@
         app:layout_constraintTop_toBottomOf="@+id/TaskText"
         app:layout_constraintVertical_bias="0.075" />
 
-    <TextView
-        android:id="@+id/CountdownText"
+    <ProgressBar
+        android:id="@+id/CountDownBar"
+        style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Countdown"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:max="3000"
+        android:minWidth="300dp"
+        android:progress="3000"
+        app:layout_constraintBottom_toTopOf="@+id/StartGameButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ScoreText"
-        app:layout_constraintVertical_bias="0.089" />
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
