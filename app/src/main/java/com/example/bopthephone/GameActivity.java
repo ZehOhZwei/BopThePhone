@@ -41,7 +41,9 @@ public class GameActivity extends AppCompatActivity {
     boolean cont = false;
     boolean gameOver = false;
     int score = 0;
-    int i = 10000;
+    int cd = 3000;
+    int interval = 100;
+    int i;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +60,7 @@ public class GameActivity extends AppCompatActivity {
         currentTask = TAP;
         scoreText.setText(score + "");
         countdownText.setText(i + "");
+        i = cd;
         startGameButton = findViewById(R.id.StartGameButton);
         tapItButton = findViewById(R.id.TapItButton);
         twistItButton = findViewById(R.id.TwistItButton);
@@ -81,19 +84,19 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void startGameClick(View view){
-        startGameButton.setVisibility(View.INVISIBLE);
-        tapItButton.setVisibility(View.VISIBLE);
-        twistItButton.setVisibility(View.VISIBLE);
-        pullItButton.setVisibility(View.VISIBLE);
+       startGameButton.setVisibility(View.INVISIBLE);
+       tapItButton.setVisibility(View.VISIBLE);
+       twistItButton.setVisibility(View.VISIBLE);
+       pullItButton.setVisibility(View.VISIBLE);
 
-        gameRound(10000);
+        gameRound(cd);
     }
 
     public void gameRound(int countdown){
-        CountDownTimer countDownTimer = new CountDownTimer(countdown, 10) {
+        CountDownTimer countDownTimer = new CountDownTimer(countdown, interval) {
             @Override
             public void onTick(long l) {
-                i = i-10;
+                i = i - interval;
                 taskText.setText(currentTask);
                 scoreText.setText(score + "");
                 countdownText.setText(i + "");
@@ -110,6 +113,12 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void onFinish() {
                 taskText.setText("Game Over!");
+                startGameButton.setVisibility(View.VISIBLE);
+                tapItButton.setVisibility(View.INVISIBLE);
+                twistItButton.setVisibility(View.INVISIBLE);
+                pullItButton.setVisibility(View.INVISIBLE);
+                i = cd;
+                startGameButton.setText("Play Again?");
             }
         }.start();
     }
@@ -162,14 +171,19 @@ public class GameActivity extends AppCompatActivity {
         }
     };
 
-    private String chooseNextTask(int task){
+    private String chooseNextTask(int task) {
         switch (task) {
-            case 0: return TAP;
+            case 0:
+                return TAP;
 
-            case 1: return TWIST;
+            case 1:
+                return TWIST;
 
-            case 2: return PULL;
+            case 2:
+                return PULL;
         }
         return TAP;
+
     }
+
 }
