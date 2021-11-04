@@ -2,44 +2,55 @@ package com.example.bopthephone.socketHandler;
 
 import com.google.gson.Gson;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.net.Socket;
-import java.net.UnknownHostException;
+import java.net.InetSocketAddress;
+import java.nio.ByteBuffer;
+import java.nio.channels.SocketChannel;
+import java.util.Random;
 
-public class Client {
+public class Client implements Runnable {
+    private long id;
+    private static SocketChannel client;
+    private static ByteBuffer buffer;
+    private static Gson gson;
+    private String target;
+    private int port;
 
-    Socket socket;
-    String target;
-    int port;
-    long id;
-
-    PrintWriter out;
-    BufferedReader in;
-
-    Gson gson = new Gson();
-
-    public Client(String url, int port){
-        this.target = url;
+    public Client(String target, int port) throws IOException {
+        this.target = target;
         this.port = port;
-        id = this.hashCode();
+        Random random = new Random();
+        id = random.nextLong();
     }
 
-    public void createSocket(){
+    public String sendMessage(String msg) throws IOException {
+        buffer = ByteBuffer.wrap(msg.getBytes());
+        String response;
+        client.write(buffer);
+        buffer.clear();
+        client.read(buffer);
+        System.out.println("test125");
+        response = new String(buffer.array()).trim();
+        buffer.clear();
+        return response;
+    }
+
+    public void close() throws IOException {
+        sendMessage("disconnect " + id);
+        if (client == null) return;
+        client.close();
+    }
+
+    @Override
+    public void run() {
         try {
-            socket = new Socket(target, port);
-            out = new PrintWriter(socket.getOutputStream(), true);
-            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            out.println(gson.toJson(new Message(this.hashCode(), "connect", "")));
+            client = SocketChannel.open(new InetSocketAddress(target, port));
+            buffer = ByteBuffer.allocate(1024);
+            while (true) {
+                client.read(buffer);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public void sendMessage(String type, String content) {
-        Message msg = new Message(id, type, content);
-        out.println(gson.toJson(msg));
     }
 }
