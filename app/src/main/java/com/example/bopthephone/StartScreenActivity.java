@@ -50,8 +50,22 @@ public class StartScreenActivity extends AppCompatActivity {
                             if (insert == true)
                             {
                                 Toast.makeText(StartScreenActivity.this, "Registered succesfully", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                                startActivity(intent);
+                            }
+                            else
+                            {
+                                Toast.makeText(StartScreenActivity.this, "Registration failed", Toast.LENGTH_SHORT).show();
                             }
                         }
+                        else
+                        {
+                            Toast.makeText(StartScreenActivity.this, "User already exists! Please sign in.", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    else
+                    {
+                        Toast.makeText(StartScreenActivity.this, "Password not matching", Toast.LENGTH_SHORT).show();
                     }
                 }
 
