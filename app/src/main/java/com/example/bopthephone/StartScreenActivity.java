@@ -50,7 +50,7 @@ public class StartScreenActivity extends AppCompatActivity {
                             if (insert == true)
                             {
                                 Toast.makeText(StartScreenActivity.this, "Registered succesfully", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                 startActivity(intent);
                             }
                             else
