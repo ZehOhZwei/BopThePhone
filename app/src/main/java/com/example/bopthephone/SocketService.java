@@ -19,14 +19,15 @@ public class SocketService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         try {
-            client = new Client("127.0.0.1", 4666);
+            System.out.println("Success");
+            client = new Client("192.168.178.31", 4666);
             Thread t = new Thread(client);
             t.start();
         } catch (IOException e) {
             e.printStackTrace();
             Log.d("Error", "Critical Failure");
         }
-        return START_NOT_STICKY;
+        return START_STICKY;
     }
 
     @Override
