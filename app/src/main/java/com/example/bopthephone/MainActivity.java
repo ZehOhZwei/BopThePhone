@@ -7,12 +7,9 @@ import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 
-import java.io.IOException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import com.example.bopthephone.socketHandler.Message;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,18 +17,16 @@ public class MainActivity extends AppCompatActivity {
 
     private SocketService socketService;
 
-    private ServiceConnection mConnection = new ServiceConnection() {
+    private final ServiceConnection mConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
-            socketService =  ((SocketService.SocketBinder)service).getService();
+            socketService = ((SocketService.SocketBinder) service).getService();
             socketService.open();
-            Log.d("asdfg","Service connected");
         }
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
             socketService = null;
-            Log.d("asdfg","Service disconnected");
         }
     };
 
@@ -61,11 +56,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void testClick(View view) {
-        try {
-            socketService.sendMessage("test555");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        socketService.sendMessage(new Message("click", null));
     }
 }
 

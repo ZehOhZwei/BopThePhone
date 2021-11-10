@@ -1,12 +1,10 @@
 package com.example.bopthephone.socketHandler;
 
 public class Message {
-    long sender;
-    String type;
-    String content;
+    public String type;
+    public String content;
 
-    public Message(long sender, String type, String content) {
-        this.sender = sender;
+    public Message(String type, String content) {
         this.type = type;
         this.content = content;
     }

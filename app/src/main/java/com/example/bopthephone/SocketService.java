@@ -4,13 +4,10 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
-import android.util.Log;
-import android.view.View;
 
 import com.example.bopthephone.socketHandler.Client;
+import com.example.bopthephone.socketHandler.Message;
 
-import java.io.IOException;
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -24,12 +21,9 @@ public class SocketService extends Service {
     }
 
     public void open() {
-        try {
-            client = new Client("192.168.2.101", 4666, executorService);
-            client.connect();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        client = new Client("192.168.2.101", 4666, executorService);
+        client.connect();
+        sendMessage(new Message("connect", "MyName"));
     }
 
     public class SocketBinder extends Binder {
@@ -38,8 +32,8 @@ public class SocketService extends Service {
         }
     }
 
-    public void sendMessage(String msg) throws IOException {
-        client.sendMessage(msg);
+    public void sendMessage(Message message) {
+        client.sendMessage(message);
     }
 
     @Override
@@ -55,10 +49,6 @@ public class SocketService extends Service {
 
     @Override
     public void onDestroy() {
-        try {
-            client.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        client.close();
     }
 }
