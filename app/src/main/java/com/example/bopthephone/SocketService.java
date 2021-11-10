@@ -10,25 +10,28 @@ import android.view.View;
 import com.example.bopthephone.socketHandler.Client;
 
 import java.io.IOException;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class SocketService extends Service {
 
     private Client client;
+    ExecutorService executorService = Executors.newFixedThreadPool(4);
 
     public SocketService() {
 
     }
 
     public void open() {
+        System.out.println("Trying to open socket");
         try {
-            client = new Client("192.168.2.101", 4666);
-            Log.d("asdfgh","Success");
-            Thread t = new Thread(client);
-            t.start();
+            client = new Client("192.168.2.101", 4666, executorService);
+            client.connect();
         } catch (IOException e) {
             e.printStackTrace();
-            Log.d("Error", "Critical Failure");
         }
+        Log.d("asdfgh", "Success");
     }
 
     public class SocketBinder extends Binder {
@@ -37,21 +40,13 @@ public class SocketService extends Service {
         }
     }
 
-    public String sendMessage(String msg) throws IOException {
-        return client.sendMessage(msg);
-    }
-
-    public void testClick(View view) {
-        try {
-            sendMessage("test444");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void sendMessage(String msg) throws IOException {
+        client.sendMessage(msg);
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-
+        System.out.println("onStartCommand");
         return START_STICKY;
     }
 

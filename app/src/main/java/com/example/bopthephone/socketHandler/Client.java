@@ -1,54 +1,73 @@
 package com.example.bopthephone.socketHandler;
 
-import com.google.gson.Gson;
+import com.example.bopthephone.SocketService;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
-import java.util.Random;
+import java.util.concurrent.Executor;
 
-public class Client implements Runnable{
-    private static SocketChannel client;
-    private static ByteBuffer readBuffer;
-    private static ByteBuffer writeBuffer;
+public class Client {
 
-    private static String target;
-    private static int port;
+//    private final Executor executor;
 
-    public Client(String target, int port) throws IOException {
+    private SocketChannel channel;
+    private ByteBuffer readBuffer;
+    private ByteBuffer writeBuffer;
+
+    private String target;
+    private int port;
+
+    private Executor executor;
+
+    public Client(String target, int port, Executor executor) {
         this.port = port;
         this.target = target;
+        readBuffer = ByteBuffer.allocate(1024);
+        writeBuffer = ByteBuffer.allocate(1024);
+
+        this.executor = executor;
     }
 
-    public String sendMessage(String msg) throws IOException {
+    public void sendMessage(String msg) {
+        executor.execute(() -> {
+            try {
+                doSendMessage("Test444");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    public String doSendMessage(String msg) throws IOException {
         writeBuffer = ByteBuffer.wrap(msg.getBytes());
         System.out.println("test125");
-        client.write(writeBuffer);
+        channel.write(writeBuffer);
         System.out.println("Sent: " + msg);
         writeBuffer.clear();
-        client.read(readBuffer);
+        channel.read(readBuffer);
         String response = new String(readBuffer.array()).trim();
+        System.out.println(response);
         readBuffer.clear();
         return response;
     }
 
-    public void close() throws IOException {
-        if (client == null) return;
-        client.close();
+    public void connect() throws IOException {
+        executor.execute(() -> {
+            try {
+                channel = SocketChannel.open(new InetSocketAddress(target, port));
+                System.out.println("socket opened");
+                doSendMessage("connect " + "Name Here");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
-    @Override
-    public void run() {
-        try {
-            client = SocketChannel.open(new InetSocketAddress(target, port));
-            readBuffer = ByteBuffer.allocate(1024);
-            writeBuffer = ByteBuffer.allocate(1024);
-            while (true) {
-                client.read(readBuffer);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void close() throws IOException {
+        if (channel == null) return;
+        channel.close();
     }
+
 }
