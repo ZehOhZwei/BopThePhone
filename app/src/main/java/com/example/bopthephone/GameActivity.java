@@ -22,8 +22,9 @@ public class GameActivity extends AppCompatActivity {
     SensorManager sensorManager;
     Sensor gyroSensor;
     Sensor accelSensor;
-    float threshold = 2f;
 
+    float gyroThreshold = 2f;
+    float accelThreshold = 1.5f;
     Random random = new Random();
 
     TextView taskText;
@@ -40,7 +41,6 @@ public class GameActivity extends AppCompatActivity {
 
     String currentTask;
     boolean cont = false;
-    boolean gameOver = false;
     int score = 0;
     int cd = 3000;
     int interval = 100;
@@ -57,16 +57,15 @@ public class GameActivity extends AppCompatActivity {
 
         taskText = findViewById(R.id.TaskText);
         scoreText = findViewById(R.id.ScoreText);
-        currentTask = TAP;
-        scoreText.setText(score + "");
         startGameButton = findViewById(R.id.StartGameButton);
         tapItButton = findViewById(R.id.TapItButton);
         twistItButton = findViewById(R.id.TwistItButton);
         pullItButton = findViewById(R.id.PullItButton);
         countDownBar = findViewById(R.id.CountDownBar);
+        currentTask = chooseNextTask(random.nextInt(3));
+        scoreText.setText(score + "");
 
     }
-
 
     @Override
     public void onResume() {
@@ -85,8 +84,9 @@ public class GameActivity extends AppCompatActivity {
     public void startGameClick(View view){
        startGameButton.setVisibility(View.INVISIBLE);
        tapItButton.setVisibility(View.VISIBLE);
-       twistItButton.setVisibility(View.VISIBLE);
-       pullItButton.setVisibility(View.VISIBLE);
+       //twistItButton.setVisibility(View.VISIBLE);
+       //pullItButton.setVisibility(View.VISIBLE);
+       countDownBar.setVisibility(View.VISIBLE);
        i = cd;
        score = 0;
        gameRound(cd);
@@ -98,7 +98,7 @@ public class GameActivity extends AppCompatActivity {
             public void onTick(long l) {
                 i = i - interval;
                 taskText.setText(currentTask);
-                scoreText.setText(score + "");
+                scoreText.setText("score = " + score);
                 countDownBar.setProgress(i);
                 if(cont) {
                     cont = false;
@@ -113,11 +113,15 @@ public class GameActivity extends AppCompatActivity {
 
             @Override
             public void onFinish() {
+                if(score > MainActivity.highscore){
+                    MainActivity.highscore = score;
+                }
                 taskText.setText("Game Over!");
                 startGameButton.setVisibility(View.VISIBLE);
                 tapItButton.setVisibility(View.INVISIBLE);
                 twistItButton.setVisibility(View.INVISIBLE);
                 pullItButton.setVisibility(View.INVISIBLE);
+                countDownBar.setVisibility(View.INVISIBLE);
                 startGameButton.setText("Play Again?");
             }
         }.start();
@@ -148,7 +152,7 @@ public class GameActivity extends AppCompatActivity {
         }
 
         public void onSensorChanged(SensorEvent event) {
-            if(event.values[1] >= threshold){
+            if(event.values[1] >= gyroThreshold){
                 if(currentTask == TWIST){
                     cont = true;
                 }
@@ -163,7 +167,7 @@ public class GameActivity extends AppCompatActivity {
 
         @Override
         public void onSensorChanged(SensorEvent event) {
-            if((event.values[1] - 9.81f) >= threshold){
+            if((event.values[1] - 9.81f) >= accelThreshold){
                 if(currentTask == PULL){
                     cont = true;
                 }
@@ -185,5 +189,4 @@ public class GameActivity extends AppCompatActivity {
         return TAP;
 
     }
-
 }

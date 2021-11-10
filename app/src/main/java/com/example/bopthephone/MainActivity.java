@@ -8,6 +8,8 @@ import android.view.View;
 public class MainActivity extends AppCompatActivity
 {
 
+    public static int highscore;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -16,6 +18,7 @@ public class MainActivity extends AppCompatActivity
 
 
     }
+
 
     public void gameClick(View view)
     {
@@ -33,6 +36,11 @@ public class MainActivity extends AppCompatActivity
     {
         Intent showSettingsView = new Intent(MainActivity.this , SettingsActivity.class);
         startActivity(showSettingsView);
+    }
+
+    public void testClick(View view)
+    {
+
     }
 }
 
