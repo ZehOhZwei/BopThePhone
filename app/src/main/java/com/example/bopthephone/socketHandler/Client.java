@@ -10,8 +10,6 @@ import java.util.concurrent.Executor;
 
 public class Client {
 
-//    private final Executor executor;
-
     private SocketChannel channel;
     private ByteBuffer readBuffer;
     private ByteBuffer writeBuffer;

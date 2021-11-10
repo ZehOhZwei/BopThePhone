@@ -24,14 +24,12 @@ public class SocketService extends Service {
     }
 
     public void open() {
-        System.out.println("Trying to open socket");
         try {
             client = new Client("192.168.2.101", 4666, executorService);
             client.connect();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Log.d("asdfgh", "Success");
     }
 
     public class SocketBinder extends Binder {
