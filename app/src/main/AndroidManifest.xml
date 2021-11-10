@@ -10,22 +10,22 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BopThePhone">
         <service
-            android:name=".SocketService"
+            android:name=".services.SocketService"
             android:enabled="true"
             android:exported="true"
             android:permission="android.permission.INTERNET" />
 
         <activity
-            android:name=".GameActivity"
+            android:name=".activities.GameActivity"
             android:exported="false" />
         <activity
-            android:name=".ScoreboardActivity"
+            android:name=".activities.ScoreboardActivity"
             android:exported="false" />
         <activity
-            android:name=".SettingsActivity"
+            android:name=".activities.SettingsActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

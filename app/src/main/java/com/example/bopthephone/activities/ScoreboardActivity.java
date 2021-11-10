@@ -1,7 +1,9 @@
-package com.example.bopthephone;
+package com.example.bopthephone.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.example.bopthephone.R;
 
 public class ScoreboardActivity extends AppCompatActivity {
 

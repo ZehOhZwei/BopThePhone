@@ -1,4 +1,4 @@
-package com.example.bopthephone.socketHandler;
+package com.example.bopthephone.socketResources;
 
 public class Message {
     public String type;

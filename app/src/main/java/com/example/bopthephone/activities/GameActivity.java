@@ -1,17 +1,25 @@
-package com.example.bopthephone;
+package com.example.bopthephone.activities;
 
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.example.bopthephone.R;
+import com.example.bopthephone.services.SocketService;
+import com.example.bopthephone.socketResources.Message;
 
 import java.util.Random;
 
@@ -19,32 +27,49 @@ public class GameActivity extends AppCompatActivity {
 
     //Dies ist meine Branch, es gibt viele wie sie, aber diese ist meine
 
-    SensorManager sensorManager;
-    Sensor gyroSensor;
-    Sensor accelSensor;
+    private SensorManager sensorManager;
+    private Sensor gyroSensor;
+    private Sensor accelSensor;
 
-    float gyroThreshold = 2f;
-    float accelThreshold = 1.5f;
-    Random random = new Random();
+    private final float gyroThreshold = 2f;
+    private final float accelThreshold = 1.5f;
+    private final Random random = new Random();
 
-    TextView taskText;
-    TextView scoreText;
-    Button startGameButton;
-    Button tapItButton;
-    Button twistItButton;
-    Button pullItButton;
-    ProgressBar countDownBar;
+    private TextView taskText;
+    private TextView scoreText;
+    private Button startGameButton;
+    private Button tapItButton;
+    private Button twistItButton;
+    private Button pullItButton;
+    private ProgressBar countDownBar;
 
-    final String TAP = "Tap it!";
-    final String TWIST = "Twist it!";
-    final String PULL = "Pull it!";
+    private final String TAP = "Tap it!";
+    private final String TWIST = "Twist it!";
+    private final String PULL = "Pull it!";
 
-    String currentTask;
-    boolean cont = false;
-    int score = 0;
-    int cd = 3000;
-    int interval = 100;
-    int i;
+    private String currentTask;
+    private boolean cont = false;
+    private int score = 0;
+    private int cd = 3000;
+    private final int interval = 100;
+    private int progessBarValue;
+
+    private SocketService socketService;
+
+    private final ServiceConnection mConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            socketService = ((SocketService.SocketBinder) service).getService();
+            if (!socketService.isConnected()) {
+                socketService.open();
+            }
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            socketService = null;
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,13 +90,27 @@ public class GameActivity extends AppCompatActivity {
         currentTask = chooseNextTask(random.nextInt(3));
         scoreText.setText(score + "");
 
+        bindService(new Intent(this, SocketService.class), mConnection, Context.BIND_AUTO_CREATE);
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unbindService(mConnection);
+    }
+
 
     @Override
     public void onResume() {
         super.onResume();
+        bindService(new Intent(this, SocketService.class), mConnection, Context.BIND_AUTO_CREATE);
         sensorManager.registerListener(gyroListener, gyroSensor, SensorManager.SENSOR_DELAY_NORMAL);
         sensorManager.registerListener(accelListener, accelSensor, SensorManager.SENSOR_DELAY_NORMAL);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 
     @Override
@@ -87,8 +126,11 @@ public class GameActivity extends AppCompatActivity {
         //twistItButton.setVisibility(View.VISIBLE);
         //pullItButton.setVisibility(View.VISIBLE);
         countDownBar.setVisibility(View.VISIBLE);
-        i = cd;
+        progessBarValue = cd;
         score = 0;
+        socketService.sendMessage(new Message("start-game", null), response -> {
+
+        });
         gameRound(cd);
     }
 
@@ -96,16 +138,16 @@ public class GameActivity extends AppCompatActivity {
         CountDownTimer countDownTimer = new CountDownTimer(countdown, interval) {
             @Override
             public void onTick(long l) {
-                i = i - interval;
+                progessBarValue -= interval;
                 taskText.setText(currentTask);
                 scoreText.setText("score = " + score);
-                countDownBar.setProgress(i);
+                countDownBar.setProgress(progessBarValue);
                 if (cont) {
                     cont = false;
                     score++;
                     currentTask = chooseNextTask(random.nextInt(3));
-                    i = countdown - (countdown / 100);
-                    countDownBar.setMax(i);
+                    progessBarValue = countdown - (countdown / 100);
+                    countDownBar.setMax(progessBarValue);
                     gameRound(countdown - (countdown / 100));
                     cancel();
                 }
