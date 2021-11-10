@@ -7,30 +7,31 @@
     tools:context=".MainActivity">
 
     <ImageButton
-        android:id="@+id/play"
+        android:id="@+id/singleplayer"
         android:layout_width="120dp"
         android:layout_height="120dp"
+        android:layout_marginStart="60dp"
         android:background="@drawable/gamebutton"
-        android:onClick="gameClick"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/multiplayer"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.482"
-        app:srcCompat="@drawable/ic_baseline_play_circle_outline_80" />
+        app:layout_constraintVertical_bias="0.5"
+        app:srcCompat="@drawable/ic_baseline_play_circle_outline_80"
+        />
 
-    <Button
-        android:id="@+id/scoreboard"
-        style="@style/Widget.AppCompat.Button.Borderless"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="16dp"
-        android:background="#009688"
-        android:text="Scoreboard"
-        android:onClick="scoreboardClick"
+    <ImageButton
+        android:id="@+id/multiplayer"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginEnd="60dp"
+        android:background="@drawable/gamebutton"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.5"
+        app:srcCompat="@drawable/ic_baseline_people_outline_80"
+        />
 
     <Button
         android:id="@+id/settings"
@@ -40,21 +41,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:background="#009688"
-        android:text="Settings"
-        android:onClick="settingsClick"
+        android:text="Einstellungen"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button"
-        android:onClick="testClick"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.749" />
 </android.support.constraint.ConstraintLayout>
