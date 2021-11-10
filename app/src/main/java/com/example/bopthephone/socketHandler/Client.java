@@ -8,35 +8,32 @@ import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 import java.util.Random;
 
-public class Client implements Runnable {
-    private long id;
+public class Client implements Runnable{
     private static SocketChannel client;
-    private static ByteBuffer buffer;
-    private static Gson gson;
-    private String target;
-    private int port;
+    private static ByteBuffer readBuffer;
+    private static ByteBuffer writeBuffer;
+
+    private static String target;
+    private static int port;
 
     public Client(String target, int port) throws IOException {
-        this.target = target;
         this.port = port;
-        Random random = new Random();
-        id = random.nextLong();
+        this.target = target;
     }
 
     public String sendMessage(String msg) throws IOException {
-        buffer = ByteBuffer.wrap(msg.getBytes());
-        String response;
-        client.write(buffer);
-        buffer.clear();
-        client.read(buffer);
+        writeBuffer = ByteBuffer.wrap(msg.getBytes());
         System.out.println("test125");
-        response = new String(buffer.array()).trim();
-        buffer.clear();
+        client.write(writeBuffer);
+        System.out.println("Sent: " + msg);
+        writeBuffer.clear();
+        client.read(readBuffer);
+        String response = new String(readBuffer.array()).trim();
+        readBuffer.clear();
         return response;
     }
 
     public void close() throws IOException {
-        sendMessage("disconnect " + id);
         if (client == null) return;
         client.close();
     }
@@ -45,9 +42,10 @@ public class Client implements Runnable {
     public void run() {
         try {
             client = SocketChannel.open(new InetSocketAddress(target, port));
-            buffer = ByteBuffer.allocate(1024);
+            readBuffer = ByteBuffer.allocate(1024);
+            writeBuffer = ByteBuffer.allocate(1024);
             while (true) {
-                client.read(buffer);
+                client.read(readBuffer);
             }
         } catch (IOException e) {
             e.printStackTrace();
