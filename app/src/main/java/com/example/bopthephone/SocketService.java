@@ -15,14 +15,21 @@ public class SocketService extends Service {
 
     private Client client;
     ExecutorService executorService = Executors.newFixedThreadPool(4);
+    private boolean isConnected = false;
 
     public SocketService() {
 
     }
 
     public void open() {
-        client = new Client("192.168.2.101", 4666, executorService);
-        client.connect();
+        client = new Client("mchdlp.de", 4666, executorService);
+        client.connect(s -> {
+            if (s.equals("success")) {
+                System.out.println("Connected Established");
+                this.isConnected = true;
+                sendMessage(new Message("connect","myName"));
+            }
+        });
         sendMessage(new Message("connect", "MyName"));
     }
 
@@ -33,6 +40,7 @@ public class SocketService extends Service {
     }
 
     public void sendMessage(Message message) {
+        if(!isConnected) return;
         client.sendMessage(message);
     }
 

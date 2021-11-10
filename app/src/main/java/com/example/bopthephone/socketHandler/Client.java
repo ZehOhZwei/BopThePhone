@@ -51,11 +51,13 @@ public class Client {
         });
     }
 
-    public void connect() {
+    public void connect(SocketCallback callback) {
         executor.execute(() -> {
             try {
                 channel = SocketChannel.open(new InetSocketAddress(target, port));
+                callback.onComplete("success");
             } catch (IOException e) {
+                callback.onComplete("failure");
                 e.printStackTrace();
             }
         });
