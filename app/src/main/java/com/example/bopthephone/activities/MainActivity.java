@@ -59,6 +59,19 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
+    public void handleMessage(Message message) {
+        if (message == null) {
+            return;
+        }
+        switch (message.type) {
+            case "connect":
+                break;
+            default:
+                System.out.println("Message received!");
+                break;
+        }
+    }
+
     public void gameClick(View view) {
         Intent showGameView = new Intent(MainActivity.this, GameActivity.class);
         startActivity(showGameView);

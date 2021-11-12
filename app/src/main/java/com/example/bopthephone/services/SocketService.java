@@ -19,8 +19,9 @@ import java.util.concurrent.Executors;
 public class SocketService extends Service {
 
     private Client client;
-    ExecutorService executorService = Executors.newFixedThreadPool(4);
-    Handler mainThreadHandler = createAsync(Looper.getMainLooper());
+
+    private final ExecutorService executorService = Executors.newFixedThreadPool(4);
+    private final Handler mainThreadHandler = createAsync(Looper.getMainLooper());
 
     private boolean connected = false;
 
@@ -32,15 +33,24 @@ public class SocketService extends Service {
         client = new Client("mchdlp.de", 4666, executorService, mainThreadHandler);
         client.connect(
                 s -> {
-            if (s.data) {
-                System.out.println("Connected Established");
-                this.connected = true;
-                sendMessage(new Message("connect", "myName"), response -> {
-                    // TODO
-                    System.out.println(response);
+                    if (s.data) {
+                        System.out.println("Connected Established");
+                        this.connected = true;
+                        sendMessage(new Message("connect", "myName"), response -> {
+                            listen(response1 -> System.out.println(response1));
+                            System.out.println(response);
+                        });
+                    } else {
+                        // TODO what to do when connection fails
+                    }
                 });
-            } else {
-                // TODO what to do when connection fails
+    }
+
+
+    public void listen(SocketCallback<Message> callback) {
+        new Thread(() -> {
+            while (true) {
+                client.receive(callback);
             }
         });
     }

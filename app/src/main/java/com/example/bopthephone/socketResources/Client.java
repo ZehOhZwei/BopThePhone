@@ -93,8 +93,29 @@ public class Client {
         });
     }
 
-
     private void notifyMessage(CallbackResponse<Message> response, SocketCallback<Message> callback) {
         handler.post(() -> callback.onComplete(response));
+    }
+
+    public void receive(SocketCallback<Message> callback) {
+        executor.execute(() -> {
+            CallbackResponse<Message> response = null;
+            try {
+                while (true) {
+                    int length;
+                    length = channel.read(readBuffer);
+                    if (length > 0) {
+                        String answer = new String(readBuffer.array()).trim();
+                        response = new CallbackResponse<>(gson.fromJson(answer, Message.class));
+                        readBuffer.clear();
+                        break;
+                    }
+                }
+            } catch (IOException e) {
+
+            } finally {
+                notifyMessage(response, callback);
+            }
+        });
     }
 }
