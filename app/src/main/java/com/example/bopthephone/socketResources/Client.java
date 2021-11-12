@@ -48,8 +48,8 @@ public class Client {
                 writeBuffer.flip();
                 writeBuffer.compact();
 
-                channel.read(readBuffer);
-                String answer = new String(readBuffer.array()).trim();
+                int length = channel.read(readBuffer);
+                String answer = new String(readBuffer.array(), 0, length).trim();
                 System.out.println(answer);
                 response = new CallbackResponse<>(gson.fromJson(answer, Message.class));
 
