@@ -36,9 +36,9 @@ public class SocketService extends Service {
                     if (s.data) {
                         System.out.println("Connected Established");
                         this.connected = true;
-                        sendMessage(new Message("connect", "myName"));
-                        listen(response -> {
-                            System.out.println(response.data.toString());
+                        sendMessage(new Message("connect", "myName"), response -> {
+                            listen(response1 -> System.out.println(response1));
+                            System.out.println(response);
                         });
                     } else {
                         // TODO what to do when connection fails
@@ -65,8 +65,8 @@ public class SocketService extends Service {
         }
     }
 
-    public void sendMessage(Message message) {
-        client.sendMessage(message);
+    public void sendMessage(Message message, SocketCallback<Message> callback) {
+        client.sendMessage(message, callback);
     }
 
     @Override

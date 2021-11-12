@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.bopthephone.R;
 import com.example.bopthephone.services.SocketService;
@@ -88,7 +89,15 @@ public class MainActivity extends AppCompatActivity {
 
     public void testClick(View view) {
         long time1 = System.currentTimeMillis();
-        socketService.sendMessage(new Message("click", null));
+        socketService.sendMessage(new Message("click", null), response -> {
+            if (response == null) {
+                Toast.makeText(getApplicationContext(), "Error while sending", Toast.LENGTH_SHORT).show();
+            } else {
+                long time2 = System.currentTimeMillis();
+                long time = time2 - time1;
+                Toast.makeText(getApplicationContext(), time + "ms", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
 

@@ -36,7 +36,7 @@ public class Client {
         this.handler = handler;
     }
 
-    public void sendMessage(Message message) {
+    public void sendMessage(Message message, SocketCallback<Message> callback) {
         executor.execute(() -> {
             CallbackResponse<Message> response = null;
             try {
@@ -47,8 +47,17 @@ public class Client {
 
                 writeBuffer.flip();
                 writeBuffer.compact();
+
+                channel.read(readBuffer);
+                String answer = new String(readBuffer.array()).trim();
+                System.out.println(answer);
+                response = new CallbackResponse<>(gson.fromJson(answer, Message.class));
+
+                readBuffer.clear();
             } catch (IOException | NullPointerException e) {
                 System.out.println("Error sending or receiving message");
+            } finally {
+                notifyMessage(response, callback);
             }
         });
     }
