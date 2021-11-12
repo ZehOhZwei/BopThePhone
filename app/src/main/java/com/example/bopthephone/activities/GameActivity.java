@@ -128,9 +128,7 @@ public class GameActivity extends AppCompatActivity {
         countDownBar.setVisibility(View.VISIBLE);
         progessBarValue = cd;
         score = 0;
-        socketService.sendMessage(new Message("start-game", null), response -> {
-
-        });
+        socketService.sendMessage(new Message("start-game", null));
         gameRound(cd);
     }
 
